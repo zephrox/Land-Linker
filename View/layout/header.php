@@ -13,11 +13,12 @@ if(isset($_SESSION['user'])){
 <head>
     <meta charset="UTF-8">
     <title>Land-Linker</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="/Land-Linker/assets/css/style.css">
 </head>
 <body>
 
 <div style="padding:10px; border-bottom:1px solid #ccc;">
+    <div style="max-width:900px; margin:auto;">
     <a href="../../index.php">Home</a>
 
     <?php if($user): ?>

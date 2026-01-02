@@ -1,6 +1,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #f5f5f5;
+<<<<<<< HEAD
     margin: 0;
     padding: 0;
 }
@@ -11,6 +12,14 @@ fieldset {
     background: #ffffff;
     border: 1px solid #ccc;
     padding: 15px;
+=======
+}
+
+fieldset {
+    width: 400px;
+    margin: 50px auto;
+    background: #ffffff;
+>>>>>>> feature/F4
 }
 
 table {
@@ -21,12 +30,16 @@ input[type="text"],
 input[type="password"],
 input[type="email"] {
     width: 95%;
+<<<<<<< HEAD
     padding: 6px;
+=======
+>>>>>>> feature/F4
 }
 
 a {
     text-decoration: none;
 }
+<<<<<<< HEAD
 
 .flash {
     max-width: 900px;
@@ -35,3 +48,5 @@ a {
     border: 1px solid #ccc;
     background: #fff;
 }
+=======
+>>>>>>> feature/F4
