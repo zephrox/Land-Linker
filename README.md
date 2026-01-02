@@ -1,2 +1,1 @@
-# Land-Linker
-Webtech Project Sec-B
+# Land Linker (MVC)
