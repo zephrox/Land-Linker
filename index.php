@@ -1,3 +1,3 @@
 <?php
-header('location: View/auth/login.php');
+header('location: Controller/router.php');
 ?>
