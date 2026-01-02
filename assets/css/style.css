@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+fieldset {
+    width: 450px;
+    margin: 50px auto;
+    background: #ffffff;
+    border: 1px solid #ccc;
+    padding: 15px;
+}
+
+table {
+    width: 100%;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 95%;
+    padding: 6px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.flash {
+    max-width: 900px;
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
