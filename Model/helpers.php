@@ -38,7 +38,7 @@ function post_int(string $key): int {
   return (int)($_POST[$key] ?? 0);
 }
 function get_int(string $key): int {
-  return (int)($_GET[$key] ?? 0);
+  return (int)($_POST[$key] ?? 0);
 }
 
 function url(string $path): string {
