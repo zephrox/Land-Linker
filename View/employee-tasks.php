@@ -104,8 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'add_s
 // ---------- LOAD DATA (ROLE-BASED) ----------
 if ($is_employee) {
   // Employee sees only assigned tasks + own schedules
-  $tasks = db_tasks_for_user($conn, (int)$u['id']);      // <-- add this function in db_queries.php if not exists
-  $schedules = db_schedules_for_user($conn, (int)$u['id']); // <-- add this function in db_queries.php if not exists
+  $tasks = db_tasks_for_user($conn, (int)$u['id']);      
+  $schedules = db_schedules_for_user($conn, (int)$u['id']); 
 } else {
   // Admin/Manager see all
   $tasks = db_tasks($conn);
@@ -116,7 +116,7 @@ if ($is_employee) {
 $pageTitle = $is_admin ? "Admin Tasks" : ($is_manager ? "Manager Tasks" : "My Tasks");
 $activeDash = "activities";
 
-// Layout: admin & manager use manager dashboard layout in your project
+// Layout: admin & manager
 if ($is_admin) {
   include __DIR__ . '/../Model/dashboard-start-admin.php';
 } elseif ($is_manager) {

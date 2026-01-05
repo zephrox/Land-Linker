@@ -1,6 +1,6 @@
-/* =========================
+/* -
    Land Linker - Global Styles
-   ========================= */
+   - */
 
 :root {
   /* Brand Palette */
@@ -98,9 +98,7 @@ button { font: inherit; }
   font-size: 12px;
 }
 
-/* =========================
-   Header
-   ========================= */
+/* -Header- */
 .site-header {
   position: sticky;
   top: 0;
@@ -198,9 +196,9 @@ button { font: inherit; }
   .nav a { padding: 12px 12px; }
 }
 
-/* =========================
+/* -
    Footer
-   ========================= */
+   - */
 .site-footer {
   margin-top: 40px;
   padding: 26px 0;
@@ -229,9 +227,9 @@ button { font: inherit; }
 
 .footer-links a:hover { color: var(--secondary-dark); }
 
-/* =========================
+/* -
    Page Skeleton Helpers
-   ========================= */
+   - */
 .page {
   padding: 26px 0 10px;
 }
@@ -254,9 +252,9 @@ button { font: inherit; }
   color: var(--muted);
   max-width: 70ch;
 }
-/* =========================
+/* -
    Homepage Sections
-   ========================= */
+   - */
 
 /* Hero Banner */
 .hero-banner {
@@ -265,7 +263,6 @@ button { font: inherit; }
   align-items: center;
   border-bottom: 1px solid var(--border);
 
-  /* Replace with your real image: /images/hero.jpg */
   background:
     linear-gradient(180deg, rgba(44, 62, 80, 0.62), rgba(44, 62, 80, 0.30)),
     url("/images/hero.jpg");
@@ -478,9 +475,9 @@ button { font: inherit; }
   .property-card { grid-column: span 12; }
   .hero-banner__inner { padding: 42px 0; }
 }
-/* =========================
+/* -
    Property Details Page
-   ========================= */
+   - */
 
 .details {
   display: grid;
@@ -709,12 +706,12 @@ button { font: inherit; }
   }
 }
 
-/* =========================
+/* -
    Map View Page
-   ========================= */
+   - */
 
 .map-layout {
-  height: calc(100vh - 74px); /* header height approx; safe */
+  height: calc(100vh - 74px); 
   display: grid;
   grid-template-columns: 380px 1fr;
   border-top: 1px solid var(--border);
@@ -906,9 +903,9 @@ button { font: inherit; }
     top: 12px;
   }
 }
-/* =========================
+/* -
    Auth + Pricing
-   ========================= */
+   - */
 
 .muted { color: var(--muted); font-weight: 650; }
 .link { color: var(--primary-green); font-weight: 800; }
@@ -1148,9 +1145,9 @@ button { font: inherit; }
   .auth-form__row { grid-template-columns: 1fr; }
   .role-grid { grid-template-columns: 1fr; }
 }
-/* =========================
+/* -
    Dashboard Layout
-   ========================= */
+   - */
 
 .dash {
   display: grid;
@@ -1598,9 +1595,9 @@ button { font: inherit; }
   .dash-side.is-open { transform: translateX(0); }
   .dash-toggle { display: inline-flex; }
 }
-/* =========================
+/* -
    Calculator
-   ========================= */
+   - */
 
 .calc {
   display: grid;
@@ -1677,9 +1674,9 @@ button { font: inherit; }
   .calc-grid { grid-template-columns: 1fr; }
 }
 
-/* =========================
+/* -
    Payment
-   ========================= */
+   - */
 
 .pay {
   display: grid;
@@ -1832,9 +1829,9 @@ button { font: inherit; }
   .pay { grid-template-columns: 1fr; }
   .pay-row { grid-template-columns: 1fr; }
 }
-/* =========================
+/* -
    Employee Tools
-   ========================= */
+   - */
 
 /* Weekly calendar */
 .week {
@@ -1954,9 +1951,9 @@ button { font: inherit; }
   color: var(--secondary-dark);
 }
 
-/* =========================
+/* -
    UI Polish (Global)
-   ========================= */
+   - */
 
 /* Buttons hover polish */
 .btn {
@@ -1990,9 +1987,9 @@ input:focus, textarea:focus, select:focus {
   }
 }
 
-/* =========================
+/* -
    Mobile responsiveness for calendar
-   ========================= */
+   - */
 
 @media (max-width: 980px) {
   /* Make calendar horizontally scrollable */
@@ -2006,9 +2003,9 @@ input:focus, textarea:focus, select:focus {
     min-width: 860px;
   }
 }
-/* =========================
+/* -
    About / Vision / Deal Statistics
-   ========================= */
+   - */
 
 .about-grid {
   display: grid;
@@ -2136,9 +2133,9 @@ input:focus, textarea:focus, select:focus {
   .kpi-grid { grid-template-columns: 1fr; }
 }
 
-/* =========================
+/* -
    Header Profile Button
-   ========================= */
+   - */
 
 .profile-link {
   display: inline-flex;
@@ -2178,7 +2175,7 @@ input:focus, textarea:focus, select:focus {
 
 
 
-/* ================= DASHBOARD ================= */
+/*  DASHBOARD  */
 
 .dash-grid {
   display: grid;

@@ -18,7 +18,7 @@ require_once __DIR__ . '/../View/layout/header.php';
       </div>
     </div>
 
-    <!-- ===== CLEAN SIDEBAR NAVIGATION ===== -->
+    <!-- CLEAN SIDEBAR NAVIGATION -->
     <nav class="dash-nav" aria-label="Dashboard navigation">
       <a class="dash-link <?php echo (($activeDash ?? '') === 'dashboard') ? 'is-active' : ''; ?>"
          href="<?= BASE_URL ?>View/employee-dashboard.php">

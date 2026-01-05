@@ -77,7 +77,7 @@ require_once __DIR__ . '/layout/header.php';
 
     <div class="property-grid">
 
-      <!-- Card 1 (no image) -->
+      <!-- Card 1 -->
       <article class="property-card card">
         <div class="property-card__media" style="height:140px; display:flex; align-items:center; justify-content:center;">
           <div style="color:#777; font-weight:700;">No Image Available</div>

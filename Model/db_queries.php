@@ -6,7 +6,7 @@ function db_all_roles(mysqli $conn): array {
   return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
 }
 
-/* ---------------- USERS (ADMIN) ---------------- */
+/*ADMIN*/
 function db_admin_users(mysqli $conn, string $q = ''): array {
   if ($q !== '') {
     $like = "%$q%";
@@ -64,7 +64,7 @@ function db_admin_delete_user(mysqli $conn, int $id): void {
   $stmt->close();
 }
 
-/* ---------------- PLANS / SUBSCRIPTIONS / PAYMENTS ---------------- */
+/* PLANS / SUBSCRIPTIONS / PAYMENTS*/
 function db_active_plans(mysqli $conn): array {
   $res = $conn->query("SELECT * FROM plans WHERE is_active=1 ORDER BY price_bdt ASC");
   return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
@@ -105,7 +105,7 @@ function db_create_payment(mysqli $conn, int $user_id, ?int $subscription_id, in
   return $id;
 }
 
-/* ---------------- PROPERTIES ---------------- */
+/*PROPERTIES*/
 function db_properties_latest(mysqli $conn, int $limit = 50): array {
   $sql = "SELECT p.*, u.first_name, u.surname
           FROM properties p JOIN users u ON u.id=p.owner_user_id
@@ -251,7 +251,7 @@ function db_delete_property(mysqli $conn, int $id, int $owner_id, bool $admin_ov
   $stmt->close();
 }
 
-/* ---------------- FAVORITES ---------------- */
+/* FAVORITES*/
 function db_is_favorite(mysqli $conn, int $user_id, int $property_id): bool {
   $stmt = $conn->prepare("SELECT 1 FROM favorites WHERE user_id=? AND property_id=? LIMIT 1");
   $stmt->bind_param('ii', $user_id, $property_id);
@@ -276,7 +276,7 @@ function db_toggle_favorite(mysqli $conn, int $user_id, int $property_id): bool 
   return true;
 }
 
-/* ---------------- INQUIRIES ---------------- */
+/* INQUIRIES*/
 function db_create_inquiry(mysqli $conn, int $property_id, ?int $buyer_user_id, string $full_name, string $email, string $phone, string $message): int {
   $sql = "INSERT INTO inquiries (property_id, buyer_user_id, full_name, email, phone, message, status)
           VALUES (?, ?, ?, ?, ?, ?, 'new')";
@@ -297,7 +297,7 @@ function db_admin_inquiries(mysqli $conn): array {
   return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
 }
 
-/* ---------------- DEALS ---------------- */
+/*  DEALS  */
 function db_admin_deals(mysqli $conn): array {
   $sql = "SELECT d.*, p.title AS property_title,
             bu.email AS buyer_email, su.email AS seller_email
@@ -319,7 +319,7 @@ function db_create_deal(mysqli $conn, int $property_id, int $buyer_id, int $sell
   return $id;
 }
 
-/* ---------------- TASKS & SCHEDULES ---------------- */
+/* TASKS & SCHEDULES  */
 function db_tasks(mysqli $conn): array {
   $sql = "SELECT t.*,
           au.email AS assigned_email, cu.email AS creator_email
@@ -358,7 +358,7 @@ function db_create_schedule(mysqli $conn, int $user_id, string $title, string $s
   return $id;
 }
 
-// -------------------- PROPERTIES --------------------
+//  PROPERTIES 
 
 function db_property_get(mysqli $conn, int $id): ?array {
   $sql = "SELECT p.*, u.first_name, u.surname, u.email
@@ -459,12 +459,11 @@ function db_property_create(mysqli $conn, int $owner_id, array $d): int {
     $featured
   );
 
-  // NOTE: mysqli bind_param cannot contain spaces; fix by binding manually below.
-  // We'll re-bind correctly without spaces:
+  
   $st->close();
 
   $st = $conn->prepare($sql);
-  // Prepare nullable numeric values safely
+
   $area_value = ($area_value === '' || $area_value === null) ? null : (float)$area_value;
   $beds  = ($beds === '' || $beds === null) ? null : (int)$beds;
   $baths = ($baths === '' || $baths === null) ? null : (int)$baths;
@@ -492,27 +491,22 @@ function db_property_create(mysqli $conn, int $owner_id, array $d): int {
     $status,
     $featured
   );
-  // Above still Model spaces → instead do correct signature without spaces:
   $st->close();
 
-  // Final correct bind:
   $st = $conn->prepare($sql);
   $st->bind_param(
     "issisdsiisssssddsi",
     $owner_id,$title,$desc,$price,$type,$area_value,$area_unit,$beds,$baths,
     $addr,$city,$state,$country,$postal,$lat,$lng,$status,$featured
   );
-  // Some environments reject the signature above due to spaces; safest is below:
 
   $st->close();
   $st = $conn->prepare($sql);
-  // safe signature (no spaces):
   $st->bind_param(
     "issisdsiisssssddsi"
     ,$owner_id,$title,$desc,$price,$type,$area_value,$area_unit,$beds,$baths
     ,$addr,$city,$state,$country,$postal,$lat,$lng,$status,$featured
   );
-  // If your PHP complains, tell me and I'll give the exact single correct bind for your version.
 
   $st->execute();
   $new_id = (int)$conn->insert_id;
@@ -572,7 +566,7 @@ function db_property_delete(mysqli $conn, int $id): bool {
   return (bool)$ok;
 }
 
-// -------------------- SIMPLE SCALARS --------------------
+//  SIMPLE SCALARS 
 function db_scalar_int(mysqli $conn, string $sql): int {
   try {
     $res = $conn->query($sql);
@@ -617,7 +611,7 @@ function db_column_exists(mysqli $conn, string $table, string $column): bool {
   }
 }
 
-// -------------------- DEAL STATISTICS --------------------
+//  DEAL STATISTICS 
 // Global counts (Admin/Manager)
 function db_stats_global(mysqli $conn): array {
   return [
@@ -644,13 +638,13 @@ function db_stats_global(mysqli $conn): array {
 function db_stats_user(mysqli $conn, int $user_id): array {
   $user_id = (int)$user_id;
 
-  // Properties: we know you have owner_user_id
+  // Properties: 
   $my_properties_total = db_scalar_int($conn, "SELECT COUNT(*) FROM properties WHERE owner_user_id={$user_id}");
   $my_properties_pub   = db_scalar_int($conn, "SELECT COUNT(*) FROM properties WHERE owner_user_id={$user_id} AND status='published'");
   $my_properties_draft = db_scalar_int($conn, "SELECT COUNT(*) FROM properties WHERE owner_user_id={$user_id} AND status='draft'");
   $my_properties_sold  = db_scalar_int($conn, "SELECT COUNT(*) FROM properties WHERE owner_user_id={$user_id} AND status='sold'");
 
-  // Payments: try common user column names
+  // Payments:
   $my_payments_total = 0;
   $my_spend_bdt = 0.0;
 
@@ -666,7 +660,7 @@ function db_stats_user(mysqli $conn, int $user_id): array {
     }
   }
 
-  // Inquiries: try common user column names
+  // Inquiries: 
   $my_inquiries_total = 0;
 
   if (db_table_exists($conn, 'inquiries')) {
@@ -726,7 +720,7 @@ function db_manager_users_all(mysqli $conn, string $q = ''): array {
 }
 
 function db_manager_create_user(mysqli $conn, array $d): int {
-  // Manager is allowed to create ONLY role_id 1 or 2 (enforced by caller too)
+  // Manager is allowed to create ONLY role_id 1 or 2 
   $sql = "INSERT INTO users (role_id, first_name, surname, email, phone, password_hash, status)
           VALUES (?,?,?,?,?,?,?)";
   $st = $conn->prepare($sql);

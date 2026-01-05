@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $user = "root";
-$pass = "";          // default in XAMPP is empty
+$pass = "";        
 $db   = "land_linker";
 
 $conn = new mysqli($host, $user, $pass, $db);

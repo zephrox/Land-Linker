@@ -13,7 +13,7 @@ $activeDash = "dashboard";
 require_once __DIR__ . '/../Model/dashboard-start-user.php';
 ?>
 
-<!-- ================= DASHBOARD CONTENT ================= -->
+<!-- -- DASHBOARD CONTENT -- -->
 
 <div class="dash-grid">
 
@@ -114,6 +114,6 @@ require_once __DIR__ . '/../Model/dashboard-start-user.php';
   </div>
 </div>
 
-<!-- ================= END DASHBOARD CONTENT ================= -->
+<!-- END DASHBOARD CONTENT -->
 
 <?php require_once __DIR__ . '/../Model/dashboard-end.php'; ?>
