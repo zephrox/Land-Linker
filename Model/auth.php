@@ -51,23 +51,31 @@ function is_manager(): bool { $u = current_user(); return $u && (int)$u['role_id
 function is_employee(): bool { $u = current_user(); return $u && (int)$u['role_id'] === 2; }
 
 function db_fetch_user_by_email(mysqli $conn, string $email): ?array {
+  $email = mysqli_real_escape_string($conn, $email);
+
   $sql = "SELECT id, role_id, first_name, surname, email, phone, password_hash, status
-          FROM users WHERE email = ? LIMIT 1";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param('s', $email);
-  $stmt->execute();
-  $row = $stmt->get_result()->fetch_assoc();
-  $stmt->close();
+          FROM users
+          WHERE email='{$email}'
+          LIMIT 1";
+
+  $res = mysqli_query($conn, $sql);
+  if (!$res) return null;
+
+  $row = mysqli_fetch_assoc($res);
   return $row ?: null;
 }
 
 function db_fetch_user_by_id(mysqli $conn, int $id): ?array {
+  $id = (int)$id;
+
   $sql = "SELECT id, role_id, first_name, surname, email, phone, status, created_at, updated_at
-          FROM users WHERE id = ? LIMIT 1";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param('i', $id);
-  $stmt->execute();
-  $row = $stmt->get_result()->fetch_assoc();
-  $stmt->close();
+          FROM users
+          WHERE id={$id}
+          LIMIT 1";
+
+  $res = mysqli_query($conn, $sql);
+  if (!$res) return null;
+
+  $row = mysqli_fetch_assoc($res);
   return $row ?: null;
 }

@@ -32,15 +32,7 @@ function db_create_subscription(mysqli $conn, int $user_id, int $plan_id): int {
   return (int)mysqli_insert_id($conn);
 }
 
-function db_create_payment(
-  mysqli $conn,
-  int $user_id,
-  ?int $subscription_id,
-  int $amount_bdt,
-  string $method,
-  string $provider_txn_id,
-  string $status='paid'
-): int {
+function db_create_payment(mysqli $conn, int $user_id, ?int $subscription_id, int $amount_bdt, string $method, string $provider_txn_id, string $status='paid'): int {
   $user_id = (int)$user_id;
   $amount_bdt = (int)$amount_bdt;
 

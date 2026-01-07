@@ -79,8 +79,10 @@ require_once __DIR__ . '/layout/header.php';
 
       <!-- Card 1 -->
       <article class="property-card card">
-        <div class="property-card__media" style="height:140px; display:flex; align-items:center; justify-content:center;">
-          <div style="color:#777; font-weight:700;">No Image Available</div>
+        <div class="property-card__media" style="height:140px; overflow:hidden;">
+          <img src="<?= BASE_URL ?>/view/assets/1.jpg" 
+               alt="Property in Brackettville, TX" 
+               style="width:100%; height:100%; object-fit:cover;">
         </div>
 
         <div class="property-card__body">
@@ -107,8 +109,10 @@ require_once __DIR__ . '/layout/header.php';
 
       <!-- Card 2 -->
       <article class="property-card card">
-        <div class="property-card__media" style="height:140px; display:flex; align-items:center; justify-content:center;">
-          <div style="color:#777; font-weight:700;">No Image Available</div>
+        <div class="property-card__media" style="height:140px; overflow:hidden;">
+          <img src="<?= BASE_URL ?>/view/assets/2.jpg" 
+               alt="Property in Austin, TX" 
+               style="width:100%; height:100%; object-fit:cover;">
         </div>
 
         <div class="property-card__body">
@@ -135,8 +139,10 @@ require_once __DIR__ . '/layout/header.php';
 
       <!-- Card 3 -->
       <article class="property-card card">
-        <div class="property-card__media" style="height:140px; display:flex; align-items:center; justify-content:center;">
-          <div style="color:#777; font-weight:700;">No Image Available</div>
+        <div class="property-card__media" style="height:140px; overflow:hidden;">
+          <img src="<?= BASE_URL ?>/view/assets/3.jpg" 
+               alt="Property in Dallas, TX" 
+               style="width:100%; height:100%; object-fit:cover;">
         </div>
 
         <div class="property-card__body">
@@ -163,8 +169,10 @@ require_once __DIR__ . '/layout/header.php';
 
       <!-- Card 4 -->
       <article class="property-card card">
-        <div class="property-card__media" style="height:140px; display:flex; align-items:center; justify-content:center;">
-          <div style="color:#777; font-weight:700;">No Image Available</div>
+        <div class="property-card__media" style="height:140px; overflow:hidden;">
+          <img src="<?= BASE_URL ?>/view/assets/4.jpg" 
+               alt="Property in Houston, TX" 
+               style="width:100%; height:100%; object-fit:cover;">
         </div>
 
         <div class="property-card__body">

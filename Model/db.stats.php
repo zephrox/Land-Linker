@@ -1,63 +1,51 @@
 <?php
 
 function db_scalar_int(mysqli $conn, string $sql): int {
-  try {
-    $res = mysqli_query($conn, $sql);
-    if (!$res) return 0;
-    $row = mysqli_fetch_row($res);
-    return (int)($row[0] ?? 0);
-  } catch (mysqli_sql_exception $e) {
-    return 0;
-  }
+  $res = mysqli_query($conn, $sql);
+  if (!$res) return 0;
+  $row = mysqli_fetch_row($res);
+  return (int)($row[0] ?? 0);
 }
 
 function db_scalar_float(mysqli $conn, string $sql): float {
-  try {
-    $res = mysqli_query($conn, $sql);
-    if (!$res) return 0.0;
-    $row = mysqli_fetch_row($res);
-    return (float)($row[0] ?? 0);
-  } catch (mysqli_sql_exception $e) {
-    return 0.0;
-  }
+  $res = mysqli_query($conn, $sql);
+  if (!$res) return 0.0;
+  $row = mysqli_fetch_row($res);
+  return (float)($row[0] ?? 0);
 }
 
 function db_table_exists(mysqli $conn, string $table): bool {
-  try {
-    $table = db_es($conn, $table);
-    $res = mysqli_query($conn, "SHOW TABLES LIKE '{$table}'");
-    return $res && mysqli_num_rows($res) > 0;
-  } catch (mysqli_sql_exception $e) {
-    return false;
-  }
+  $table = mysqli_real_escape_string($conn, $table);
+  $res = mysqli_query($conn, "SHOW TABLES LIKE '{$table}'");
+  return $res && mysqli_num_rows($res) > 0;
 }
 
 function db_column_exists(mysqli $conn, string $table, string $column): bool {
-  try {
-    if (!db_table_exists($conn, $table)) return false;
-    $table = db_es($conn, $table);
-    $column = db_es($conn, $column);
-    $res = mysqli_query($conn, "SHOW COLUMNS FROM `{$table}` LIKE '{$column}'");
-    return $res && mysqli_num_rows($res) > 0;
-  } catch (mysqli_sql_exception $e) {
-    return false;
-  }
+  if (!db_table_exists($conn, $table)) return false;
+  $table = mysqli_real_escape_string($conn, $table);
+  $column = mysqli_real_escape_string($conn, $column);
+  $res = mysqli_query($conn, "SHOW COLUMNS FROM `{$table}` LIKE '{$column}'");
+  return $res && mysqli_num_rows($res) > 0;
 }
 
 function db_stats_global(mysqli $conn): array {
   return [
     'users_total'        => db_scalar_int($conn, "SELECT COUNT(*) FROM users"),
     'users_active'       => db_scalar_int($conn, "SELECT COUNT(*) FROM users WHERE status='active'"),
+
     'properties_total'   => db_scalar_int($conn, "SELECT COUNT(*) FROM properties"),
     'properties_pub'     => db_scalar_int($conn, "SELECT COUNT(*) FROM properties WHERE status='published'"),
     'properties_draft'   => db_scalar_int($conn, "SELECT COUNT(*) FROM properties WHERE status='draft'"),
     'properties_sold'    => db_scalar_int($conn, "SELECT COUNT(*) FROM properties WHERE status='sold'"),
+
     'inquiries_total'    => db_scalar_int($conn, "SELECT COUNT(*) FROM inquiries"),
     'deals_total'        => db_scalar_int($conn, "SELECT COUNT(*) FROM deals"),
+
     'payments_total'     => db_scalar_int($conn, "SELECT COUNT(*) FROM payments"),
     'revenue_total_bdt'  => db_scalar_float($conn, "SELECT COALESCE(SUM(amount_bdt),0) FROM payments WHERE status='paid'"),
+
     'subs_total'         => db_scalar_int($conn, "SELECT COUNT(*) FROM subscriptions"),
-    'subs_active'        => db_scalar_int($conn, "SELECT COUNT(*) FROM subscriptions WHERE status='active'")
+    'subs_active'        => db_scalar_int($conn, "SELECT COUNT(*) FROM subscriptions WHERE status='active'"),
   ];
 }
 

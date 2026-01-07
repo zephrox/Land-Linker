@@ -1,5 +1,5 @@
 <?php
-/*PROPERTIES*/
+
 function db_properties_latest(mysqli $conn, int $limit = 50): array {
   $limit = (int)$limit;
 
@@ -165,4 +165,15 @@ function db_delete_property(mysqli $conn, int $id, int $owner_id, bool $admin_ov
   }
 
   mysqli_query($conn, "DELETE FROM properties WHERE id={$id}");
+}
+function db_properties_map(mysqli $conn): array {
+  $sql = "SELECT id, title, price_bdt, city, latitude, longitude
+          FROM properties
+          WHERE status='published'
+            AND latitude IS NOT NULL
+            AND longitude IS NOT NULL
+          ORDER BY id DESC";
+
+  $res = mysqli_query($conn, $sql);
+  return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
 }

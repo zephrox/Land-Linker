@@ -15,6 +15,7 @@ function db_toggle_favorite(mysqli $conn, int $user_id, int $property_id): bool 
     mysqli_query($conn, "DELETE FROM favorites WHERE user_id={$user_id} AND property_id={$property_id}");
     return false;
   }
+
   mysqli_query($conn, "INSERT INTO favorites (user_id, property_id) VALUES ({$user_id}, {$property_id})");
   return true;
 }

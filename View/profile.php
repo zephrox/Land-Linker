@@ -5,7 +5,9 @@ require_login(BASE_URL . 'View/login.php');
 $u = current_user();
 $user = db_fetch_user_by_id($conn, (int)$u['id']);
 if (!$user) { logout_user(); redirect(BASE_URL . 'View/login.php'); }
+
 $errors = [];
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   csrf_check();
   $first = post_str('first_name', 60);
@@ -15,13 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($first === '' || $last === '') $errors[] = "First name and surname required.php";
 
   if (!$errors) {
-    $stmt = $conn->prepare("UPDATE users SET first_name=?, surname=?, phone=? WHERE id=?");
     $uid = (int)$user['id'];
-    $stmt->bind_param('sssi', $first, $last, $phone, $uid);
-    $stmt->execute();
-    $stmt->close();
 
-    // update session name
+    $first_sql = mysqli_real_escape_string($conn, $first);
+    $last_sql  = mysqli_real_escape_string($conn, $last);
+    $phone_sql = mysqli_real_escape_string($conn, $phone);
+
+    $sql = "UPDATE users
+            SET first_name='{$first_sql}', surname='{$last_sql}', phone='{$phone_sql}'
+            WHERE id={$uid}";
+
+    mysqli_query($conn, $sql);
+
     $_SESSION['auth_user']['first_name'] = $first;
     $_SESSION['auth_user']['surname'] = $last;
 
