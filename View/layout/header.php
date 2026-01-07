@@ -6,6 +6,7 @@ $flash_success = flash_get('success') ?? null;
 $flash_error   = flash_get('error') ?? null;
 
 $u = current_user();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +15,36 @@ $u = current_user();
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Land Linker</title>
   <link rel="stylesheet" href="<?= BASE_URL ?>css/style.css">
+  
+  <script>
+    var BASE_URL = '<?= BASE_URL ?>';
+    
+    //ajx
+    function ajax(url, elementId) {
+        let xhttp = new XMLHttpRequest();
+        xhttp.open('GET', url, true);
+        xhttp.send();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById(elementId).innerHTML = this.responseText;
+            }
+        }
+    }
+    
+    // JSON
+    function ajaxPost(url, data, callback) {
+        let xhttp = new XMLHttpRequest();
+        xhttp.open('POST', url, true);
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhttp.send('data=' + JSON.stringify(data));
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let response = JSON.parse(this.responseText);
+                callback(response);
+            }
+        }
+    }
+  </script>
 </head>
 <body>
 

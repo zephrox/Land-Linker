@@ -12,6 +12,13 @@ require_once __DIR__ . '/layout/header.php';
         all in one place.
       </p>
 
+      <!-- Card 1 -->
+      <div class="search-box">
+        <input type="text" id="search" class="search-input" placeholder="Search properties by title, city..." 
+               onkeyup="ajax('<?= BASE_URL ?>Controller/ajax.php?action=search&q=' + this.value, 'results')">
+        <div id="results" class="search-results"></div>
+      </div>
+
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
         <a class="btn btn-primary" href="<?= BASE_URL ?>View/deal-statistics.php">Get Started</a>
         <a class="btn btn-outline" href="<?= BASE_URL ?>View/map-view.php">Open Map View</a>
@@ -89,6 +96,9 @@ require_once __DIR__ . '/layout/header.php';
           <div class="property-card__top">
             <div class="property-card__price">$995,000</div>
             <span class="badge-accent">392 Acres</span>
+            
+            <!-- ADD FAVORITE BUTTON HERE -->
+            <button class="fav-btn" id="favBtn1" onclick="toggleFavorite(1, 'favBtn1')">🤍</button>
           </div>
           <div class="property-card__location">Brackettville, TX</div>
 
@@ -103,7 +113,7 @@ require_once __DIR__ . '/layout/header.php';
             </span>
           </div>
 
-          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php">View Details</a>
+          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php?id=1">View Details</a>
         </div>
       </article>
 
@@ -133,7 +143,7 @@ require_once __DIR__ . '/layout/header.php';
             </span>
           </div>
 
-          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php">View Details</a>
+          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php?id=2">View Details</a>
         </div>
       </article>
 
@@ -163,7 +173,7 @@ require_once __DIR__ . '/layout/header.php';
             </span>
           </div>
 
-          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php">View Details</a>
+          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php?id=3">View Details</a>
         </div>
       </article>
 
@@ -193,7 +203,7 @@ require_once __DIR__ . '/layout/header.php';
             </span>
           </div>
 
-          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php">View Details</a>
+          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php?id=4">View Details</a>
         </div>
       </article>
 
@@ -223,5 +233,20 @@ require_once __DIR__ . '/layout/header.php';
     </div>
   </div>
 </section>
+
+<script>
+function toggleFavorite(propertyId, btnId) {
+    ajaxPost(BASE_URL + 'Controller/ajax.php', {
+        action: 'toggle_favorite',
+        property_id: propertyId
+    }, function(response) {
+        if (response.success) {
+            document.getElementById(btnId).innerHTML = response.is_favorite ? '❤️' : '🤍';
+        } else {
+            alert(response.message);
+        }
+    });
+}
+</script>
 
 <?php require_once __DIR__ . '/layout/footer.php'; ?>
