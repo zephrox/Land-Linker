@@ -100,7 +100,7 @@ require_once __DIR__ . '/layout/header.php';
 
     <div style="margin-top:12px;">
       <button class="btn btn-primary" type="submit">Save</button>
-      <a class="btn btn-outline" href="<?= BASE_URL ?>View/logout.php">Logout</a>
+      <a class="btn btn-outline" href="<?= BASE_URL ?>view/logout.php">Logout</a>
     </div>
   </form>
 </div>

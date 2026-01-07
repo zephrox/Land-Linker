@@ -6,7 +6,7 @@ $u = current_user();
 $user_id = (int)$u['id'];
 
 $id = get_int('id');
-$p = $id > 0 ? db_property_get($conn, $id) : null;
+$p = $id > 0 ? db_property_by_id($conn, $id) : null;
 
 if (!$p) { flash_set('error', 'Property not found.'); redirect(BASE_URL . 'View/my-properties.php'); }
 
@@ -18,7 +18,7 @@ if (!is_admin() && $owner_id !== $user_id) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   csrf_check();
-  db_property_delete($conn, $id);
+  db_delete_property($conn, $id, $owner_id, is_admin());
   flash_set('success', 'Property deleted.');
   redirect(BASE_URL . 'View/my-properties.php');
 }

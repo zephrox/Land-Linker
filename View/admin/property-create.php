@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ((int)$d['price_bdt'] <= 0) $errors[] = 'Price must be greater than 0.';
 
   if (!$errors) {
-    db_property_create($conn, $user_id, $d);
+    db_create_property($conn, $user_id, $d);
     flash_set('success', 'Property created.');
     redirect(BASE_URL . 'View/my-properties.php');
   }

@@ -13,13 +13,27 @@ require_once __DIR__ . '/../layout/header.php';
     <table style="width:100%; border-collapse:collapse;">
       <thead>
         <tr>
-          <th align="left">ID</th><th align="left">Title</th><th align="left">Owner</th>
+          <th align="left">Image</th><th align="left">ID</th><th align="left">Title</th><th align="left">Owner</th>
           <th align="left">Price</th><th align="left">Status</th><th align="left">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($rows as $p): ?>
+        <?php foreach ($rows as $p):
+          $media = db_property_media($conn, (int)$p['id']);
+          $primary_img = null;
+          foreach ($media as $m) {
+            if ($m['is_primary']) { $primary_img = $m; break; }
+          }
+          if (!$primary_img && $media) $primary_img = $media[0];
+        ?>
           <tr style="border-top:1px solid rgba(255,255,255,0.08);">
+            <td style="padding:8px 0;">
+              <?php if ($primary_img): ?>
+                <img src="<?= BASE_URL . e($primary_img['file_path']) ?>" style="width:60px; height:45px; object-fit:cover; border-radius:4px;">
+              <?php else: ?>
+                <div style="width:60px; height:45px; background:#333; border-radius:4px;"></div>
+              <?php endif; ?>
+            </td>
             <td><?= (int)$p['id'] ?></td>
             <td><?= e($p['title']) ?></td>
             <td><?= e($p['first_name'].' '.$p['surname']) ?></td>
@@ -32,7 +46,7 @@ require_once __DIR__ . '/../layout/header.php';
             </td>
           </tr>
         <?php endforeach; ?>
-        <?php if (!$rows): ?><tr><td colspan="6">No properties.</td></tr><?php endif; ?>
+        <?php if (!$rows): ?><tr><td colspan="7">No properties.</td></tr><?php endif; ?>
       </tbody>
     </table>
   </div>
