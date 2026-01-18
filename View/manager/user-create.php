@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../Model/init.php';
-require_role([3], <?= BASE_URL ?>View/login.php');
+require_role([3], BASE_URL . 'View/login.php');
 
 $errors = [];
 
@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $role_id = (int)($_POST['role_id'] ?? 0);
 
-  // ✅ manager can only create user or employee
+  //  manager can only create user or employee
   if (!in_array($role_id, [1,2], true)) {
     $errors[] = "You can only create User or Employee.php";
   }
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors[] = "Name, email and password are required.php";
   }
 
-  // no regex: use built-in validator
+  //validator
   if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errors[] = "Invalid email.php";
   }

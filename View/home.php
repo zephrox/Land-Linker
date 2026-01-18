@@ -12,6 +12,13 @@ require_once __DIR__ . '/layout/header.php';
         all in one place.
       </p>
 
+      <!-- Card 1 -->
+      <div class="search-box">
+        <input type="text" id="search" class="search-input" placeholder="Search properties by title, city..." 
+               onkeyup="ajax('<?= BASE_URL ?>Controller/ajax.php?action=search&q=' + this.value, 'results')">
+        <div id="results" class="search-results"></div>
+      </div>
+
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
         <a class="btn btn-primary" href="<?= BASE_URL ?>View/deal-statistics.php">Get Started</a>
         <a class="btn btn-outline" href="<?= BASE_URL ?>View/map-view.php">Open Map View</a>
@@ -77,16 +84,21 @@ require_once __DIR__ . '/layout/header.php';
 
     <div class="property-grid">
 
-      <!-- Card 1 (no image) -->
+      <!-- Card 1 -->
       <article class="property-card card">
-        <div class="property-card__media" style="height:140px; display:flex; align-items:center; justify-content:center;">
-          <div style="color:#777; font-weight:700;">No Image Available</div>
+        <div class="property-card__media" style="height:140px; overflow:hidden;">
+          <img src="<?= BASE_URL ?>/view/assets/1.jpg" 
+               alt="Property in Brackettville, TX" 
+               style="width:100%; height:100%; object-fit:cover;">
         </div>
 
         <div class="property-card__body">
           <div class="property-card__top">
             <div class="property-card__price">$995,000</div>
             <span class="badge-accent">392 Acres</span>
+            
+            <!-- ADD FAVORITE BUTTON HERE -->
+            <button class="fav-btn" id="favBtn1" onclick="toggleFavorite(1, 'favBtn1')">🤍</button>
           </div>
           <div class="property-card__location">Brackettville, TX</div>
 
@@ -101,14 +113,16 @@ require_once __DIR__ . '/layout/header.php';
             </span>
           </div>
 
-          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php">View Details</a>
+          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php?id=1">View Details</a>
         </div>
       </article>
 
       <!-- Card 2 -->
       <article class="property-card card">
-        <div class="property-card__media" style="height:140px; display:flex; align-items:center; justify-content:center;">
-          <div style="color:#777; font-weight:700;">No Image Available</div>
+        <div class="property-card__media" style="height:140px; overflow:hidden;">
+          <img src="<?= BASE_URL ?>/view/assets/2.jpg" 
+               alt="Property in Austin, TX" 
+               style="width:100%; height:100%; object-fit:cover;">
         </div>
 
         <div class="property-card__body">
@@ -129,14 +143,16 @@ require_once __DIR__ . '/layout/header.php';
             </span>
           </div>
 
-          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php">View Details</a>
+          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php?id=2">View Details</a>
         </div>
       </article>
 
       <!-- Card 3 -->
       <article class="property-card card">
-        <div class="property-card__media" style="height:140px; display:flex; align-items:center; justify-content:center;">
-          <div style="color:#777; font-weight:700;">No Image Available</div>
+        <div class="property-card__media" style="height:140px; overflow:hidden;">
+          <img src="<?= BASE_URL ?>/view/assets/3.jpg" 
+               alt="Property in Dallas, TX" 
+               style="width:100%; height:100%; object-fit:cover;">
         </div>
 
         <div class="property-card__body">
@@ -157,14 +173,16 @@ require_once __DIR__ . '/layout/header.php';
             </span>
           </div>
 
-          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php">View Details</a>
+          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php?id=3">View Details</a>
         </div>
       </article>
 
       <!-- Card 4 -->
       <article class="property-card card">
-        <div class="property-card__media" style="height:140px; display:flex; align-items:center; justify-content:center;">
-          <div style="color:#777; font-weight:700;">No Image Available</div>
+        <div class="property-card__media" style="height:140px; overflow:hidden;">
+          <img src="<?= BASE_URL ?>/view/assets/4.jpg" 
+               alt="Property in Houston, TX" 
+               style="width:100%; height:100%; object-fit:cover;">
         </div>
 
         <div class="property-card__body">
@@ -185,7 +203,7 @@ require_once __DIR__ . '/layout/header.php';
             </span>
           </div>
 
-          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php">View Details</a>
+          <a class="btn btn-primary property-card__btn" href="<?= BASE_URL ?>View/property-details.php?id=4">View Details</a>
         </div>
       </article>
 
@@ -215,5 +233,20 @@ require_once __DIR__ . '/layout/header.php';
     </div>
   </div>
 </section>
+
+<script>
+function toggleFavorite(propertyId, btnId) {
+    ajaxPost(BASE_URL + 'Controller/ajax.php', {
+        action: 'toggle_favorite',
+        property_id: propertyId
+    }, function(response) {
+        if (response.success) {
+            document.getElementById(btnId).innerHTML = response.is_favorite ? '❤️' : '🤍';
+        } else {
+            alert(response.message);
+        }
+    });
+}
+</script>
 
 <?php require_once __DIR__ . '/layout/footer.php'; ?>

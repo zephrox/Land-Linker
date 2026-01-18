@@ -9,11 +9,11 @@ require_role([2], BASE_URL . 'View/login.php');
 $pageTitle  = "User Dashboard";
 $activeDash = "dashboard";
 
-// include dashboard layout START (ONLY ONCE)
+// include dashboard layout START ONLY ONCE
 require_once __DIR__ . '/../Model/dashboard-start-employee.php';
 ?>
 
-<!-- ================= DASHBOARD CONTENT ================= -->
+<!-- -- DASHBOARD CONTENT -- -->
 
 <div class="dash-grid">
 
@@ -119,6 +119,6 @@ require_once __DIR__ . '/../Model/dashboard-start-employee.php';
   </div>
 </div>
 
-<!-- ================= END DASHBOARD CONTENT ================= -->
+<!-- -- END DASHBOARD CONTENT -- -->
 
 <?php include __DIR__ . '/../Model/dashboard-end.php'; ?>

@@ -6,7 +6,7 @@ $u = current_user();
 $user_id = (int)$u['id'];
 
 $id = get_int('id');
-$p = $id > 0 ? db_property_get($conn, $id) : null;
+$p = $id > 0 ? db_property_by_id($conn, $id) : null;
 
 if (!$p) { flash_set('error', 'Property not found.'); redirect(BASE_URL . 'View/my-properties.php'); }
 
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ((int)$d['price_bdt'] <= 0) $errors[] = 'Price must be greater than 0.';
 
   if (!$errors) {
-    db_property_update($conn, $id, $d);
+    db_update_property($conn, $id, $user_id, $d, is_admin());
     flash_set('success', 'Property updated.');
     redirect(BASE_URL . 'View/my-properties.php');
   }
@@ -98,5 +98,37 @@ require_once __DIR__ . '/layout/header.php';
       <a class="btn btn-outline" href="<?= BASE_URL ?>View/my-properties.php">Back</a>
     </div>
   </form>
+
+  <div class="card" style="padding:16px; margin-top:12px;">
+    <h3>Upload Additional Images</h3>
+    <form method="post" enctype="multipart/form-data" action="<?= BASE_URL ?>Controller/upload_property_media.php">
+      <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
+      <input type="hidden" name="property_id" value="<?= (int)$id ?>">
+      <div>
+        <label>Select Images (jpg, jpeg, png, webp)</label>
+        <input type="file" name="images[]" multiple accept="image/jpeg,image/png,image/webp" style="display:block; margin-top:8px;">
+      </div>
+      <button class="btn btn-primary" type="submit" style="margin-top:12px;">Upload Images</button>
+    </form>
+
+    <?php
+    $media = db_property_media($conn, $id);
+    if ($media):
+    ?>
+      <div style="margin-top:20px;">
+        <h4>Current Images</h4>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:12px; margin-top:12px;">
+          <?php foreach ($media as $m): ?>
+            <div style="border:1px solid #ddd; border-radius:4px; overflow:hidden;">
+              <img src="<?= BASE_URL . e($m['file_path']) ?>" style="width:100%; height:120px; object-fit:cover;">
+              <?php if ($m['is_primary']): ?>
+                <div style="background:#4CAF50; color:#fff; padding:4px; text-align:center; font-size:12px;">Primary</div>
+              <?php endif; ?>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    <?php endif; ?>
+  </div>
 </div>
 <?php require_once __DIR__ . '/layout/footer.php'; ?>

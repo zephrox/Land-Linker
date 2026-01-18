@@ -10,7 +10,7 @@ if ($id <= 0) {
 
 $role_id = db_user_role_id($conn, $id);
 
-// ✅ manager can delete only user/employee
+//  manager can delete only user/employee
 if (!in_array((int)$role_id, [1,2], true)) {
   flash_set('error', 'You are not allowed to delete this account.');
   redirect(BASE_URL . 'View/manager/users.php');
